@@ -1,0 +1,23 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Jane on X</title></head>
+<body style="font-family:sans-serif;padding:40px">
+<article data-testid="tweet">
+  <div data-testid="User-Name"><span>Jane Doe</span><span>@jane</span></div>
+  <div data-testid="tweetText">Shipped a new design system today 🚀</div>
+</article>
+<div style="height:120px"></div>
+<div id="composer" style="border:1px solid #ccc;width:400px">
+  <div id="ed" contenteditable="true" role="textbox" data-testid="tweetTextarea_0" style="min-height:40px;padding:6px">@jane&nbsp;</div>
+</div>
+<div><button data-testid="tweetButtonInline" aria-disabled="true" id="reply">Reply</button></div>
+<script>
+  const ed = document.getElementById("ed"), reply = document.getElementById("reply");
+  window.state = ed.innerText;
+  ed.addEventListener("input", () => {
+    window.state = ed.innerText; reply.setAttribute("aria-disabled", String(window.state.trim() === "@jane"));
+  });
+  reply.addEventListener("click", () => {
+    if (reply.getAttribute("aria-disabled") !== "true") window.submitted = window.state;
+  });
+</script>
+</body></html>

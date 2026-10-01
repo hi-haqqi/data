@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Auto Comment</title>
+<link rel="stylesheet" href="ui.css">
+<style>
+  body { width: 300px; padding: 14px; }
+  .row { display: flex; align-items: center; justify-content: space-between; padding: 7px 0; }
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
+  .stat { border: 1px solid var(--line); border-radius: 8px; padding: 8px; }
+  .stat b { display: block; font-size: 20px; }
+  .stat span { color: var(--mut); font-size: 12px; }
+  .site { color: var(--mut); margin: 2px 0 10px; }
+  .actions { display: flex; gap: 8px; margin-top: 10px; }
+  .actions button { flex: 1; }
+</style>
+</head>
+<body>
+  <h1>💬 Auto Comment</h1>
+  <p class="site" id="site">…</p>
+
+  <label class="row">Aktif <input type="checkbox" id="enabled"></label>
+  <label class="row">Tampilkan tombol 💬 <input type="checkbox" id="showButton"></label>
+  <label class="row">Kirim otomatis setelah isi <input type="checkbox" id="autoSubmit"></label>
+
+  <div class="stats">
+    <div class="stat"><b id="filled">0</b><span>diisi hari ini</span></div>
+    <div class="stat"><b id="sent">0</b><span>dikirim otomatis</span></div>
+  </div>
+
+  <div class="actions">
+    <button id="inject" hidden>Aktifkan di tab ini</button>
+    <button id="options" class="primary">Template & AI</button>
+  </div>
+  <p class="hint">Shortcut: <kbd>Alt+Shift+C</kbd> template acak · <kbd>Alt+Shift+A</kbd> saran AI · atau klik kanan di kotak komentar.</p>
+  <script src="lib.js"></script>
+  <script src="platforms.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

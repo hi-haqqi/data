@@ -1,0 +1,12 @@
+{
+  "name": "auto-comment-extension",
+  "private": true,
+  "description": "Chrome extension (MV3) untuk isi komentar sekali klik. Tidak perlu build; package ini hanya untuk test.",
+  "scripts": {
+    "test": "node --test tests/lib.test.js tests/background.test.js",
+    "test:e2e": "node --test tests/e2e.test.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.0"
+  }
+}

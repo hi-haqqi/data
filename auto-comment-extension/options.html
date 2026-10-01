@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auto Comment Settings</title>
+<link rel="stylesheet" href="ui.css">
+<style>
+  main { max-width: 760px; margin: 0 auto; padding: 28px 16px 80px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  label.f { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--mut); }
+  label.f input, label.f select { width: 100%; }
+  .check { display: flex; gap: 8px; align-items: center; margin: 10px 0; }
+  .tpl { margin-bottom: 14px; }
+  .tpl b { display: block; margin-bottom: 4px; font-size: 13px; }
+  .bar { position: sticky; bottom: 0; display: flex; gap: 8px; align-items: center; padding: 12px 0; background: var(--bg); border-top: 1px solid var(--line); margin-top: 24px; }
+  #status { color: var(--ok); font-size: 13px; }
+  #status.err { color: var(--err); }
+  #aiOut { margin: 8px 0 0; padding-left: 18px; }
+  .box { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; margin-top: 8px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>💬 Auto Comment: pengaturan</h1>
+  <p class="hint">Semua data (template, API key, statistik) disimpan lokal di browser ini.</p>
+
+  <h2>Template komentar</h2>
+  <div class="box hint" style="margin-top:0">
+    Satu template per baris. Variabel: <code>{name}</code> <code>{firstName}</code> <code>{title}</code> <code>{platform}</code>
+    (dibuang rapi bila tidak terdeteksi). Variasi acak (spintax): <code>{Keren|Mantap|Bagus}</code>, opsional:
+    <code>{, {firstName}|}</code>. Variasi membuat komentar tidak identik, yang cepat ditandai spam oleh platform.
+  </div>
+  <div id="templates" style="margin-top:12px"></div>
+
+  <h2>Saran AI (opsional, Claude API)</h2>
+  <p class="hint">Isi postingan (teks + URL gambar) dikirim ke Anthropic untuk membuat 3 saran komentar yang spesifik.
+    Biaya ditagih ke akun API Anda. Buat key di <code>console.anthropic.com</code>.</p>
+  <div class="grid" style="margin-top:10px">
+    <label class="f">API key <input type="password" id="apiKey" placeholder="sk-ant-..." autocomplete="off"></label>
+    <label class="f">Model <select id="model"></select></label>
+    <label class="f">Bahasa
+      <select id="language">
+        <option value="auto">Ikuti bahasa postingan</option>
+        <option value="Indonesian">Indonesia</option>
+        <option value="English">English</option>
+      </select>
+    </label>
+    <label class="f">Gaya / nada <input id="tone" placeholder="friendly, genuine, concise"></label>
+    <label class="f">Maks kata per komentar <input type="number" id="maxWords" min="5" max="80"></label>
+  </div>
+  <label class="f" style="margin-top:12px">Tentang Anda (opsional, agar komentar punya sudut pandang)
+    <input id="persona" placeholder="mis. UI/UX designer di Jakarta, fokus fintech & SaaS">
+  </label>
+  <label class="check"><input type="checkbox" id="sendImage"> Kirim gambar postingan ke AI (bagus untuk Dribbble / Instagram)</label>
+  <button id="testAi">Tes AI dengan contoh postingan</button>
+  <ol id="aiOut" class="hint"></ol>
+
+  <h2>Kirim otomatis & batas aman</h2>
+  <label class="check"><input type="checkbox" id="autoSubmit"> Klik tombol Kirim otomatis setelah komentar diisi</label>
+  <div class="grid">
+    <label class="f">Jeda minimal antar kiriman (detik) <input type="number" id="minGapSec" min="0" max="3600"></label>
+    <label class="f">Maks kiriman otomatis per hari <input type="number" id="dailyLimit" min="1" max="500"></label>
+  </div>
+  <p class="hint">Jika batas tercapai, komentar tetap diisi tetapi Anda yang menekan Kirim. Komentar massal yang cepat & seragam
+    biasanya memicu pembatasan / banned akun oleh platform.</p>
+
+  <div class="bar">
+    <button id="save" class="primary">Simpan</button>
+    <button id="reset">Kembalikan default</button>
+    <span id="status" role="status"></span>
+  </div>
+</main>
+<script src="lib.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

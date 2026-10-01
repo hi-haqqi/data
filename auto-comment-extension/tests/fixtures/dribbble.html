@@ -1,0 +1,30 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<meta property="og:title" content="Fintech Dashboard by Jane Doe on Dribbble">
+<meta property="og:description" content="Calm card-based layout for tracking spending.">
+<title>Fintech Dashboard by Jane Doe on Dribbble</title></head>
+<body style="font-family:sans-serif;padding:40px">
+<h1>Fintech Dashboard</h1>
+<div style="height:200px"></div>
+<form id="f" onsubmit="return false">
+  <textarea id="c" rows="3" cols="50" placeholder="Add a comment"></textarea>
+  <button type="submit" id="send" disabled>Post comment</button>
+</form>
+<script>
+  // Meniru React: state hanya berubah lewat event input, tombol aktif setelah ada isi.
+  // (Override value di sini hidup di main world; content script tidak melihatnya.)
+  const c = document.getElementById("c"), send = document.getElementById("send");
+  const native = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, "value");
+  let tracker = "";
+  Object.defineProperty(c, "value", {
+    get() { return native.get.call(this); },
+    set(v) { tracker = v; native.set.call(this, v); },
+  });
+  window.state = "";
+  c.addEventListener("input", () => {
+    if (c.value === tracker) return; // React menganggap tidak ada perubahan
+    tracker = c.value; window.state = c.value; send.disabled = !window.state.trim();
+  });
+  send.addEventListener("click", () => { window.submitted = window.state; });
+</script>
+</body></html>
