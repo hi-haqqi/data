@@ -108,7 +108,7 @@
       if (!replace) range.collapse(false);
       sel.removeAllRanges();
       sel.addRange(range);
-      const insert = replace ? text : " " + text;
+      const insert = replace || /\s$/.test(el.innerText) ? text : " " + text;
       // execCommand memicu beforeinput/input sehingga Draft.js (X), Quill (LinkedIn),
       // Lexical (Facebook/Threads) ikut memperbarui state-nya.
       let ok = document.execCommand("insertText", false, insert);
